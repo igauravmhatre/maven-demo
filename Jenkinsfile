@@ -1,27 +1,20 @@
-pipeline {
-    agent any
+pipeline { 
+    agent any 
     stages {
-        stage('One') {
-                steps {
-                        echo 'Hi, this is Zulaikha from edureka'
-			
-                }
+        stage('Build') { 
+            steps { 
+                echo 'Running Build Phase'
+            }
         }
-	    stage('Two'){
-		    
-		steps {
-			input('Do you want to proceed?')
+        stage('Test'){
+            steps {
+                echo 'Running Test Phase' 
+            }
         }
-	    }
-        stage('Three') {
-                when {
-                        not {
-                                branch "master"
-                        }
-                }
-                steps {
-			echo "Hello"
-                        }
+        stage('Deploy') {
+            steps {
+                echo 'Running Deploy Phase'
+            }
         }
-        
+    }
 }
