@@ -1,20 +1,47 @@
-pipeline { 
-    agent any 
+pipeline {
+    agent any
     stages {
-        stage('Build') { 
-            steps { 
-                echo 'Running Build Phase'
-            }
+        stage('One') {
+                steps {
+                        echo 'Hi, this is Zulaikha from edureka'
+			
+                }
         }
-        stage('Test'){
-            steps {
-                echo 'Running Test Phase' 
-            }
+	    stage('Two'){
+		    
+		steps {
+			input('Do you want to proceed?')
         }
-        stage('Deploy') {
-            steps {
-                echo 'Running Deploy Phase'
-            }
+	    }
+        stage('Three') {
+                when {
+                        not {
+                                branch "master"
+                        }
+                }
+                steps {
+			echo "Hello"
+                        }
+        }
+        stage('Four') {
+                parallel {
+                        stage('Unit Test') {
+                                steps{
+                                        echo "Running the unit test..."
+                                }
+                        }
+                        stage('Integration test') {
+                        agent {
+                                docker {
+                                        reuseNode false
+					image 'ubuntu'
+                                        }
+			}
+				steps {
+					echo 'Running the integration test..'
+				}
+                               
+			}  }
         }
     }
 }
